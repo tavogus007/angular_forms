@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-form',
@@ -7,7 +7,21 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./basic-form.component.scss'],
 })
 export class BasicFormComponent implements OnInit {
-  nameField = new FormControl(' Soy un control');
+  nameField = new FormControl('', [Validators.required, Validators.maxLength(10)]);
+  emailField = new FormControl('');
+  phoneField = new FormControl('');
+  colorField = new FormControl('#000000');
+  dateField = new FormControl('');
+  ageField = new FormControl(12);
+
+
+  categoryField = new FormControl('category-2');
+  tagField = new FormControl('');
+
+  agreeField = new FormControl(false);
+  radioField = new FormControl('');
+  radioField_2 = new FormControl('');
+
 
   constructor() {}
 
@@ -19,5 +33,12 @@ export class BasicFormComponent implements OnInit {
 
   getNameValue() {
     console.log(this.nameField.value);
+  }
+
+  get isNameFieldValid(){
+    return this.nameField.touched && this.nameField.valid;
+  };
+  get isNameFieldInvalid(){
+    return this.nameField.touched && this.nameField.invalid;
   }
 }
