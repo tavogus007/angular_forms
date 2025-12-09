@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-form',
@@ -7,38 +7,83 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./basic-form.component.scss'],
 })
 export class BasicFormComponent implements OnInit {
-  nameField = new FormControl('', [Validators.required, Validators.maxLength(10)]);
-  emailField = new FormControl('');
-  phoneField = new FormControl('');
-  colorField = new FormControl('#000000');
-  dateField = new FormControl('');
-  ageField = new FormControl(12);
+
+form = new FormGroup({
+  name: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+  email: new FormControl(''),
+  phone: new FormControl(''),
+  color: new FormControl('#000000'),
+  date: new FormControl(''),
+  age: new FormControl(12),
 
 
-  categoryField = new FormControl('category-2');
-  tagField = new FormControl('');
+  category: new FormControl('category-2'),
+  tag: new FormControl(''),
 
-  agreeField = new FormControl(false);
-  radioField = new FormControl('');
-  radioField_2 = new FormControl('');
+  agree: new FormControl(false),
+  radio: new FormControl(''),
+  radio2: new FormControl(''),
+   
+});
 
 
   constructor() {}
 
   ngOnInit(): void {
-    this.nameField.valueChanges.subscribe((value) => {
+    this.nameField?.valueChanges.subscribe((value) => {
       console.log(value);
     });
-  }
+  };
 
   getNameValue() {
-    console.log(this.nameField.value);
+    console.log(this.nameField?.value);
+  };
+
+  get nameField(){
+    return this.form.get('name');
+  };
+
+  get  emailField(){
+    return this.form.get('email');
   }
 
+  get phoneField(){
+    return this.form.get('phone');
+  }
+  get colorField(){
+    return this.form.get('color')
+  } 
+  get dateField(){
+    return this.form.get('date');
+  }
+  get ageField(){
+    return this.form.get('age')
+  }
+  get categoryField(){
+    return this.form.get('category')
+  }
+  get tagField(){
+    return this.form.get('tag')
+  }
+  get agreeField(){
+    return this.form.get('agree')
+  }
+  get radioField(){
+    return this.form.get('radio')
+  }
+  get radioField_2(){
+    return this.form.get('radio2')
+  }
+  
+  
   get isNameFieldValid(){
-    return this.nameField.touched && this.nameField.valid;
+    return this.nameField?.touched && this.nameField?.valid;
   };
   get isNameFieldInvalid(){
-    return this.nameField.touched && this.nameField.invalid;
+    return this.nameField?.touched && this.nameField?.invalid;
+  }
+
+  save(event){
+    console.log(this.form.value);
   }
 }
