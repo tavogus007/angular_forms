@@ -17,12 +17,12 @@ form: FormGroup;
   }
 
   ngOnInit(): void {
-    this.nameField?.valueChanges.subscribe((value) => {
-      console.log(value);
-    });
-    // this.form.valueChanges.subscribe((value) => {
+    // this.nameField?.valueChanges.subscribe((value) => {
     //   console.log(value);
     // });
+    // // this.form.valueChanges.subscribe((value) => {
+    // //   console.log(value);
+    // // });
 
 
   };
@@ -32,7 +32,11 @@ form: FormGroup;
   };
 
   get nameField(){
-    return this.form.get('name');
+    return this.form.get('fullname')?.get('name');
+  };
+
+  get lastField(){
+    return this.form.get('fullname')?.get('last');
   };
 
   get  emailField(){
@@ -86,7 +90,12 @@ form: FormGroup;
 
   private biuldForm(){
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z]+$/)]],
+      fullname: this.formBuilder.group({
+        name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z]+$/)]],
+        last: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z]+$/)]],
+      }),
+      
+      
       email: ['',[Validators.required ,Validators.email]],
       phone: ['',Validators.required],
       color: ['#000000'],
